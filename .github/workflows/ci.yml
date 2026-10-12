@@ -1,0 +1,35 @@
+name: CI Pipeline Demo
+
+# When should this pipeline run?
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest          # Free Linux runner
+
+    steps:
+      # 1. Get the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Install dependencies (none in our dummy project, but good habit)
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run lint
+      - name: Lint
+        run: npm run lint
+
+      # 5. Run tests
+      - name: Run tests
+        run: npm test
